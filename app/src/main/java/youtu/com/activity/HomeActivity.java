@@ -3,6 +3,7 @@ package youtu.com.activity;
 
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -11,7 +12,20 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.youdu.vuandroidadsdk.okhttp.CommonOkHttpClient;
+import com.youdu.vuandroidadsdk.okhttp.listener.DisposeDataHandle;
+import com.youdu.vuandroidadsdk.okhttp.listener.DisposeDataListener;
+import com.youdu.vuandroidadsdk.okhttp.request.CommonRequest;
+import com.youdu.vuandroidadsdk.okhttp.request.RequestParams;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.Request;
 import youtu.com.R;
+import youtu.com.TestBean;
 import youtu.com.activity.base.BaseActivity;
 import youtu.com.view.fragment.home.HomeFragment;
 import youtu.com.view.fragment.home.MessageFragment;
@@ -150,9 +164,57 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
 //                    mCurrent = mMineFragment;
                     fragmentTransaction.show(mMineFragment);
                 }
+
+//                test();
                 break;
         }
 
         fragmentTransaction.commit();
+    }
+
+    private void test() {
+
+
+
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("type","4");
+        requestParams.put("num","30");
+
+        Request getRequest = CommonRequest.createGetRequest("http://www.imooc.com/api/teacher", requestParams);
+
+        // 返回字符串
+//        CommonOkHttpClient.get(getRequest,new DisposeDataHandle(new DisposeDataListener() {
+//            @Override
+//            public void onSuccess(Object responseObj) {
+//                Log.e(TAG, "onSuccess: "+responseObj.toString());
+//            }
+//
+//            @Override
+//            public void onFailure(Object reasonObj) {
+//
+//                Log.e(TAG, "onFailure: "+reasonObj );
+//            }
+//        }));
+
+        // 返回Bean
+        CommonOkHttpClient.get(getRequest,
+                new DisposeDataHandle(
+                        new DisposeDataListener() {
+            @Override
+            public void onSuccess(Object responseObj) {
+                Log.e(TAG, "onSuccess: "+responseObj.toString());
+                if (responseObj instanceof TestBean){
+                    Integer status = ((TestBean) responseObj).getStatus();
+                    List<TestBean.DataDTO> data = ((TestBean) responseObj).getData();
+                    Log.e(TAG, "onSuccess: "+data.get(0).toString() );
+                }
+            }
+
+            @Override
+            public void onFailure(Object reasonObj) {
+
+                Log.e(TAG, "onFailure: "+reasonObj );
+            }
+        },TestBean.class));
     }
 }

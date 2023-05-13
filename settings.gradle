@@ -14,3 +14,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "ImmocBusiness"
 include ':app'
+include ':vuandroidadsdk'
