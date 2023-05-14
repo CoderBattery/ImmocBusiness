@@ -1,11 +1,13 @@
 package youtu.com.view.fragment.base;
 
 
+import android.app.Activity;
+
 import androidx.fragment.app.Fragment;
 
 public class BaseFragment extends Fragment {
-//
-//    protected Activity mContext;
+
+    protected Activity mContext;
 //
 //    /**
 //     * 申请指定的权限.
