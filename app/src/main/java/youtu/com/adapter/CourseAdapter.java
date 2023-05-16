@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.gson.Gson;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 import youtu.com.R;
 import youtu.com.module.recommand.RecommandBodyValue;
+import youtu.com.util.Util;
 
 
 /**
@@ -141,28 +143,28 @@ public class CourseAdapter extends BaseAdapter {
                     mViewHolder.mZanView = (TextView) convertView.findViewById(R.id.item_zan_view);
                     mViewHolder.mProductLayout = (LinearLayout) convertView.findViewById(R.id.product_photo_layout);
                     break;
-//                case CARD_TYPE_TWO:
-//                    mViewHolder = new ViewHolder();
-//                    convertView = mInflate.inflate(R.layout.item_product_card_two_layout, parent, false);
-//                    mViewHolder.mLogoView = (CircleImageView) convertView.findViewById(R.id.item_logo_view);
-//                    mViewHolder.mTitleView = (TextView) convertView.findViewById(R.id.item_title_view);
-//                    mViewHolder.mInfoView = (TextView) convertView.findViewById(R.id.item_info_view);
-//                    mViewHolder.mFooterView = (TextView) convertView.findViewById(R.id.item_footer_view);
-//                    mViewHolder.mProductView = (ImageView) convertView.findViewById(R.id.product_photo_view);
-//                    mViewHolder.mPriceView = (TextView) convertView.findViewById(R.id.item_price_view);
-//                    mViewHolder.mFromView = (TextView) convertView.findViewById(R.id.item_from_view);
-//                    mViewHolder.mZanView = (TextView) convertView.findViewById(R.id.item_zan_view);
-//                    break;
-//                case CARD_TYPE_THREE:
-//                    mViewHolder = new ViewHolder();
-//                    convertView = mInflate.inflate(R.layout.item_product_card_three_layout, null, false);
-//                    mViewHolder.mViewPager = (ViewPager) convertView.findViewById(R.id.pager);
-//                    //add data
-//                    ArrayList<RecommandBodyValue> recommandList = Util.handleData(value);
-//                    mViewHolder.mViewPager.setPageMargin(Utils.dip2px(mContext, 12));
-//                    mViewHolder.mViewPager.setAdapter(new HotSalePagerAdapter(mContext, recommandList));
-//                    mViewHolder.mViewPager.setCurrentItem(recommandList.size() * 100);
-//                    break;
+                case CARD_TYPE_TWO:
+                    mViewHolder = new ViewHolder();
+                    convertView = mInflate.inflate(R.layout.item_product_card_two_layout, parent, false);
+                    mViewHolder.mLogoView = (CircleImageView) convertView.findViewById(R.id.item_logo_view);
+                    mViewHolder.mTitleView = (TextView) convertView.findViewById(R.id.item_title_view);
+                    mViewHolder.mInfoView = (TextView) convertView.findViewById(R.id.item_info_view);
+                    mViewHolder.mFooterView = (TextView) convertView.findViewById(R.id.item_footer_view);
+                    mViewHolder.mProductView = (ImageView) convertView.findViewById(R.id.product_photo_view);
+                    mViewHolder.mPriceView = (TextView) convertView.findViewById(R.id.item_price_view);
+                    mViewHolder.mFromView = (TextView) convertView.findViewById(R.id.item_from_view);
+                    mViewHolder.mZanView = (TextView) convertView.findViewById(R.id.item_zan_view);
+                    break;
+                case CARD_TYPE_THREE:
+                    mViewHolder = new ViewHolder();
+                    convertView = mInflate.inflate(R.layout.item_product_card_three_layout, null, false);
+                    mViewHolder.mViewPager = (ViewPager) convertView.findViewById(R.id.pager);
+                    //add data
+                    ArrayList<RecommandBodyValue> recommandList = Util.handleData(value);
+                    mViewHolder.mViewPager.setPageMargin(Utils.dip2px(mContext, 12));
+                    mViewHolder.mViewPager.setAdapter(new HotSalePagerAdapter(mContext, recommandList));
+                    // 让当前位置处于300
+                    break;
             }
             convertView.setTag(mViewHolder);
         }//有tag时
@@ -216,19 +218,19 @@ public class CourseAdapter extends BaseAdapter {
                     mViewHolder.mProductLayout.addView(createImageView(url));
                 }
                 break;
-//            case CARD_TYPE_TWO:
-//                mImagerLoader.displayImage(mViewHolder.mLogoView, value.logo);
-//                mViewHolder.mTitleView.setText(value.title);
-//                mViewHolder.mInfoView.setText(value.info.concat(mContext.getString(R.string.tian_qian)));
-//                mViewHolder.mFooterView.setText(value.text);
-//                mViewHolder.mPriceView.setText(value.price);
-//                mViewHolder.mFromView.setText(value.from);
-//                mViewHolder.mZanView.setText(mContext.getString(R.string.dian_zan).concat(value.zan));
-//                //为单个ImageView加载远程图片
-//                mImagerLoader.displayImage(mViewHolder.mProductView, value.url.get(0));
-//                break;
-//            case CARD_TYPE_THREE:
-//                break;
+            case CARD_TYPE_TWO:
+                mImagerLoader.displayImage(mViewHolder.mLogoView, value.logo);
+                mViewHolder.mTitleView.setText(value.title);
+                mViewHolder.mInfoView.setText(value.info.concat(mContext.getString(R.string.tian_qian)));
+                mViewHolder.mFooterView.setText(value.text);
+                mViewHolder.mPriceView.setText(value.price);
+                mViewHolder.mFromView.setText(value.from);
+                mViewHolder.mZanView.setText(mContext.getString(R.string.dian_zan).concat(value.zan));
+                //为单个ImageView加载远程图片
+                mImagerLoader.displayImage(mViewHolder.mProductView, value.url.get(0));
+                break;
+            case CARD_TYPE_THREE:
+                break;
         }
         return convertView;
     }
