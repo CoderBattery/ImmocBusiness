@@ -123,7 +123,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
             mListView.setVisibility(View.VISIBLE);
 
             //为listview添加头
-//            mListView.addHeaderView(new HomeHeaderLayout(mContext, mRecommandData.data.head));
+            mListView.addHeaderView(new HomeHeaderLayout(mContext, mRecommandData.data.head));
 
 
             mAdapter = new CourseAdapter(mContext, mRecommandData.data.list);

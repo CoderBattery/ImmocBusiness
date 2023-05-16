@@ -8,10 +8,14 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+
+import androidx.viewpager.widget.ViewPager;
+
+import com.lwj.widget.viewpagerindicator.ViewPagerIndicator;
 import com.youdu.vuandroidadsdk.okhttp.adutils.ImageLoaderUtil;
 
-import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
 import youtu.com.R;
+import youtu.com.adapter.PhotoPagerAdapter;
 import youtu.com.module.recommand.RecommandHeadValue;
 
 
@@ -28,10 +32,10 @@ public class HomeHeaderLayout extends RelativeLayout {
      * UI
      */
     private RelativeLayout mRootView;
-    private AutoScrollViewPager mViewPager;
-//    private CirclePageIndicator mPagerIndictor;
+    private ViewPager mViewPager;
+    private ViewPagerIndicator mPagerIndictor;
     private TextView mHotView;
-//    private PhotoPagerAdapter mAdapter;
+    private PhotoPagerAdapter mAdapter;
     private ImageView[] mImageViews = new ImageView[4];
     private LinearLayout mFootLayout;
 
@@ -51,13 +55,14 @@ public class HomeHeaderLayout extends RelativeLayout {
         mHeaderValue = headerValue;
         mImageLoader = ImageLoaderUtil.getInstance(mContext);
         initView();
+
     }
 
     private void initView() {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         mRootView = (RelativeLayout) inflater.inflate(R.layout.listview_home_head_layout, this);
-//        mViewPager = (AutoScrollViewPager) mRootView.findViewById(R.id.pager);
-//        mPagerIndictor = (CirclePageIndicator) mRootView.findViewById(R.id.pager_indictor_view);
+        mViewPager = mRootView.findViewById(R.id.pager);
+        mPagerIndictor = (ViewPagerIndicator) mRootView.findViewById(R.id.indicator);
         mHotView = (TextView) mRootView.findViewById(R.id.zuixing_view);
         mImageViews[0] = (ImageView) mRootView.findViewById(R.id.head_image_one);
         mImageViews[1] = (ImageView) mRootView.findViewById(R.id.head_image_two);
@@ -65,11 +70,11 @@ public class HomeHeaderLayout extends RelativeLayout {
         mImageViews[3] = (ImageView) mRootView.findViewById(R.id.head_image_four);
         mFootLayout = (LinearLayout) mRootView.findViewById(R.id.content_layout);
 
-//        mAdapter = new PhotoPagerAdapter(mContext, mHeaderValue.ads, true);
-//        mViewPager.setAdapter(mAdapter);
+        mAdapter = new PhotoPagerAdapter(mContext, mHeaderValue.ads, true);
+        mViewPager.setAdapter(mAdapter);
 //        mViewPager.startAutoScroll(3000);
-//        mPagerIndictor.setViewPager(mViewPager);
-//
+        mPagerIndictor.setViewPager(mViewPager);
+
         for (int i = 0; i < mImageViews.length; i++) {
             mImageLoader.displayImage(mImageViews[i], mHeaderValue.middle.get(i));
         }
