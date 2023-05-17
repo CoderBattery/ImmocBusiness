@@ -2,11 +2,13 @@ package youtu.com.view.fragment.home;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,10 +24,12 @@ import com.youdu.vuandroidadsdk.okhttp.listener.DisposeDataListener;
 
 import youtu.com.R;
 import youtu.com.adapter.CourseAdapter;
+import youtu.com.constant.Constant;
 import youtu.com.module.recommand.BaseRecommandModel;
 import youtu.com.network.http.RequestCenter;
 import youtu.com.view.fragment.base.BaseFragment;
 import youtu.com.view.home.HomeHeaderLayout;
+import youtu.com.zxing.app.CaptureActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,8 +47,8 @@ import youtu.com.view.home.HomeHeaderLayout;
  */
 public class HomeFragment extends BaseFragment implements View.OnClickListener {
 //        , AdapterView.OnItemClickListener {
-//
-//    private static final int REQUEST_QRCODE = 0x01;
+
+    private static final int REQUEST_QRCODE = 0x01;
 
 
     private static final String TAG = "HomeFragment";
@@ -152,22 +156,22 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.qrcode_view:
-//                if (hasPermission(Constant.HARDWEAR_CAMERA_PERMISSION)) {
-//                    doOpenCamera();
-//                } else {
-//                    requestPermission(Constant.HARDWEAR_CAMERA_CODE, Constant.HARDWEAR_CAMERA_PERMISSION);
-//                }
+                if (hasPermission(Constant.HARDWEAR_CAMERA_PERMISSION)) {
+                    doOpenCamera();
+                } else {
+                    requestPermission(Constant.HARDWEAR_CAMERA_CODE, Constant.HARDWEAR_CAMERA_PERMISSION);
+                }
                 break;
-//            case R.id.category_view:
+            case R.id.category_view:
 //                //与我交谈
 //                Intent intent2 = new Intent(Intent.ACTION_VIEW, Util.createQQUrl("277451977"));
 //                intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //                startActivity(intent2);
-//                break;
-//            case R.id.search_view:
+                break;
+            case R.id.search_view:
 //                Intent searchIntent = new Intent(mContext, SearchActivity.class);
 //                mContext.startActivity(searchIntent);
-//                break;
+                break;
         }
     }
 
@@ -180,19 +184,21 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 //            startActivity(intent);
 //        }
 //    }
-//
-//    @Override
-//    public void doOpenCamera() {
-//        Intent intent = new Intent(mContext, CaptureActivity.class);
-//        startActivityForResult(intent, REQUEST_QRCODE);
-//    }
-//
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        switch (requestCode) {
-//            case REQUEST_QRCODE:
-//                if (resultCode == Activity.RESULT_OK) {
-//                    String code = data.getStringExtra("SCAN_RESULT");
+
+    @Override
+    public void doOpenCamera() {
+        Intent intent = new Intent(mContext, CaptureActivity.class);
+        startActivityForResult(intent, REQUEST_QRCODE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case REQUEST_QRCODE:
+                if (resultCode == Activity.RESULT_OK) {
+                    String code = data.getStringExtra("SCAN_RESULT");
+
+
 //                    if (code.contains("http") || code.contains("https")) {
 //                        Intent intent = new Intent(mContext, AdBrowserActivity.class);
 //                        intent.putExtra(AdBrowserActivity.KEY_URL, code);
@@ -200,9 +206,14 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener {
 //                    } else {
 //                        Toast.makeText(mContext, code, Toast.LENGTH_SHORT).show();
 //                    }
-//                }
-//                break;
-//        }
-//    }
-//
+                } else if (resultCode == 200){
+                    Parcelable qr_code = data.getParcelableExtra("QR_CODE");
+                    if (qr_code instanceof Bitmap){
+                        Toast.makeText(mContext, "aa"+((Bitmap) qr_code).getWidth(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+                break;
+        }
+    }
+
 }
